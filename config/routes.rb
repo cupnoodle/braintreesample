@@ -9,4 +9,7 @@ Rails.application.routes.draw do
     get 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
   end
 
+  get 'users/index', :to => 'users#index', :as => 'user_index'
+  post 'users/subscribe', :to => 'users#subscribe', :as => 'user_subscribe'
+
 end

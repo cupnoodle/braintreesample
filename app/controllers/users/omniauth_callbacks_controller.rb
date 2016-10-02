@@ -34,13 +34,14 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     sign_in_and_redirect @user, :event => :authentication
-    set_flash_message(:notice, :success, :kind => "Twitter") if is_navigational_format?
+    flash[:success] = "Login success"
+    #set_flash_message(:notice, :success, :kind => "Twitter") if is_navigational_format?
 
     #redirect_to root_path
   end
 
   def failure
-    flash[:error] = "Twitter login error"
+    flash[:danger] = "Twitter login error"
     redirect_to root_path
   end
 
