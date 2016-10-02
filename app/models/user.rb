@@ -1,14 +1,15 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
+  # :database_authenticatable, :rememberable, :validatable
   # :confirmable, :lockable, :timeoutable and :omniauthable, :registerable, :recoverable
-  devise :database_authenticatable, :rememberable, :trackable, :validatable
+  devise :trackable, :omniauthable, :omniauth_providers => [:twitter]
 
    # validation
   VALID_EMAIL_REGEX = /\A([\w+\-]\.?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   VALID_USERNAME_REGEX = /\A[A-Za-z0-9]+\z/i
   # Validation for attributes
-  validates :username, :uniqueness => true, :presence => true, :format => VALID_USERNAME_REGEX
-  validates :email, :presence => true, :length => { :maximum => 128 }, :format => VALID_EMAIL_REGEX
+  validates :username, :uniqueness => true, :presence => true
+  #validates :email, :presence => true, :length => { :maximum => 128 }
 
-  enum plan: { free: 0, basic: 1, premium: 2 }
+  enum plan: { free: 0, premium: 1 }
 end

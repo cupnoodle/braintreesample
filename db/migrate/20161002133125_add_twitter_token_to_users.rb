@@ -10,6 +10,5 @@ class AddTwitterTokenToUsers < ActiveRecord::Migration[5.0]
     remove_column :users, :oauth_token
     remove_column :users, :username
 
-    remove_index :users, :username
   end
 end
