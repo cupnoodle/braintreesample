@@ -1,12 +1,11 @@
-users#index
-
-to-do: add unsubscribe option
-
 <div class="row">
   <div class="col-md-8 col-md-offset-2 text-center">
     <br>
     <span class="title">User panel</span><br>
     <span> Hi, <%= current_user.username %> </span>
+    <% if current_user.premium? %>
+      <span class="premium-badge">premium</span>
+    <% end %>
     <br><br>
     <% if current_user.plan == 'free' %>
       <%= form_tag user_subscribe_path, :id => 'checkout' do %>

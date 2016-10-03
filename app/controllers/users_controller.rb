@@ -40,7 +40,20 @@ class UsersController < ApplicationController
   end
 
   def unsubscribe
-    
+    result = Braintree::Customer.delete(current_user.uid)
+    if result.success?
+      puts "customer successfully deleted"
+      current_user.plan = "free"
+      current_user.subscription_id = nil
+      current_user.billing_day_of_month = nil
+      current_user.save
+
+      flash[:success] = "You have unsubscribed, welcome back peasant."
+    else
+      p result.errors
+    end
+
+    redirect_to user_index_path
   end
 
 end
