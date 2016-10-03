@@ -25,7 +25,10 @@ class UsersController < ApplicationController
 
       if result.success?
         current_user.plan = "premium"
+        current_user.subscription_id = result.subscription.id
+        current_user.billing_day_of_month = result.subscription.billing_day_of_month
         current_user.save
+
         flash[:success] = "You have subscribed to the premium plan! Congratulation on gaining higher social status!"
       end
 
@@ -33,7 +36,11 @@ class UsersController < ApplicationController
       p customer.errors
     end
 
-
     redirect_to user_index_path
   end
+
+  def unsubscribe
+    
+  end
+
 end

@@ -1,28 +1,35 @@
 users#index
 
-to-do: add payment option here
+to-do: add unsubscribe option
 
 <div class="row">
   <div class="col-md-8 col-md-offset-2 text-center">
     <br>
     <span class="title">User panel</span><br>
     <span> Hi, <%= current_user.username %> </span>
-    <%= form_tag user_subscribe_path, :id => 'checkout' do %>
-      <div id="payment-form"></div>
-      <input type="submit" class="btn btn-primary btn-lg" value="Subscribe premium for $2.99 a month">
+    <br><br>
+    <% if current_user.plan == 'free' %>
+      <%= form_tag user_subscribe_path, :id => 'checkout' do %>
+        <div id="payment-form"></div>
+        <input type="submit" class="btn btn-primary btn-lg" value="Subscribe premium for $2.99 a month">
+      <% end %>
+      
+      <script src="https://js.braintreegateway.com/js/braintree-2.29.0.min.js"></script>
+      <script>
+        // We generated a client token for you so you can test out this code
+        // immediately. In a production-ready integration, you will need to
+        // generate a client token on your server (see section below).
+        var clientToken = "<%= @client_token %>";
+      
+        braintree.setup(clientToken, "dropin", {
+          container: "payment-form"
+        });
+      </script>
+    <% else %>
+      <%= form_tag user_unsubscribe_path do %>
+         <input type="submit" class="btn btn-warning btn-lg" value="Unsubscribe and become a peasant">
+      <% end %>
     <% end %>
-  
-    <script src="https://js.braintreegateway.com/js/braintree-2.29.0.min.js"></script>
-    <script>
-      // We generated a client token for you so you can test out this code
-      // immediately. In a production-ready integration, you will need to
-      // generate a client token on your server (see section below).
-      var clientToken = "<%= @client_token %>";
-  
-      braintree.setup(clientToken, "dropin", {
-        container: "payment-form"
-      });
-    </script>
     <br><br>
     <a href="<%= destroy_user_session_path %>" class="btn btn-success">Logout</a>
   </div>

@@ -11,5 +11,6 @@ Rails.application.routes.draw do
 
   get 'users/index', :to => 'users#index', :as => 'user_index'
   post 'users/subscribe', :to => 'users#subscribe', :as => 'user_subscribe'
+  post 'users/unsubscribe', :to => 'users#unsubscribe', :as => 'user_unsubscribe'
 
 end
